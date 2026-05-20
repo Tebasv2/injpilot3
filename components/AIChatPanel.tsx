@@ -3,9 +3,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { useWallet } from '@/hooks/useWallet';
 import { useChatHistory } from '@/hooks/useChatHistory';
-import { sendToClaude } from '@/lib/claude';
-import { buildAndBroadcastSendTx } from '@/lib/injective';
-import { getBalance, getStakingInfo } from '@/lib/injective';
+import { sendToGroq } from '@/lib/groq';
+import { buildAndBroadcastSendTx, getBalance, getStakingInfo } from '@/lib/injective';
 import { Send, Loader2, User, Bot, AlertCircle } from 'lucide-react';
 import type { ChatMessage } from '@/types';
 
@@ -35,18 +34,16 @@ export default function AIChatPanel() {
       case 'get_wallet_balance': {
         const bals = await getBalance(wallet.address);
         const injBal = bals.find((b) => b.denom === 'inj');
-        return `Your wallet balance:\n${injBal ? `INJ: ${(parseFloat(injBal.amount) / 1e18).toFixed(4)}` : 'No INJ'}`;
+        return `Your wallet balance:\n${injBal ? `INJ: ${(parseFloat(injBal.amount) / 1e18).toFixed(4)}` : 'No INJ found'}`;
       }
       case 'get_staking_info': {
         const info = await getStakingInfo(wallet.address);
         return `Staking Info:\nAPY: ${info.apy}%\nTotal Rewards: ${(parseFloat(info.totalRewards) / 1e18).toFixed(4)} INJ\nDelegations: ${info.delegations.length}`;
       }
       case 'get_transaction_history': {
-        // In production, call injective indexer API
-        return 'Transaction history:\n(No transactions found for this demo)';
+        return 'Transaction history:\n(No transactions found — connect to mainnet to see real txs)';
       }
       case 'send_token': {
-        // Show confirmation UI
         const toAddress = inputArgs.to_address as string;
         const amount = inputArgs.amount as string;
         const denom = inputArgs.denom as string;
@@ -102,18 +99,16 @@ export default function AIChatPanel() {
     setTxHash('');
     setTxError('');
 
-    // Add user message
     await addMessage({ role: 'user', content: userMsg, timestamp: Date.now() });
 
     try {
-      // Get AI response
-      const response = await sendToClaude({
+      const { content } = await sendToGroq({
         messages: [...messages, { id: 'temp', role: 'user', content: userMsg, timestamp: Date.now() }],
         walletAddress: wallet.address,
         onToolCall: handleToolCall,
       });
 
-      await addMessage({ role: 'assistant', content: response, timestamp: Date.now() });
+      await addMessage({ role: 'assistant', content: content, timestamp: Date.now() });
     } catch (err: any) {
       await addMessage({
         role: 'assistant',
@@ -153,7 +148,7 @@ export default function AIChatPanel() {
         </div>
         <div>
           <h3 className="text-white font-medium">AI Assistant</h3>
-          <p className="text-xs text-injective-100 opacity-50">Powered by Claude</p>
+          <p className="text-xs text-injective-100 opacity-50">Powered by Groq</p>
         </div>
       </div>
 
@@ -175,7 +170,7 @@ export default function AIChatPanel() {
                 Ask me anything about your Injective wallet
               </p>
               <div className="flex flex-wrap gap-2 justify-center max-w-sm">
-                {['Where should I stake for best APY?', 'Explain my last 5 transactions', 'Send 2 INJ to inj1...'].map((q) => (
+                {['Where should I stake?', 'Explain my transactions', 'Send 2 INJ to inj1...'].map((q) => (
                   <button
                     key={q}
                     onClick={() => setInput(q)}
@@ -221,7 +216,7 @@ export default function AIChatPanel() {
           </div>
         )}
 
-        {messagesEndRef.current}
+        <div ref={messagesEndRef} />
       </div>
 
       {/* Transaction Confirmation Modal */}
