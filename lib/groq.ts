@@ -1,6 +1,6 @@
 import type { ChatMessage } from '@/types';
 
-const GROQ_API_KEY = process.env.GROQ_API_KEY || '';
+const GROQ_API_KEY = process.env.GROQ_API_KEY;
 const MODEL = 'llama-3.3-70b-versatile'; // Groq's fastest model
 
 const SYSTEM_PROMPT = `You are an AI assistant for an Injective blockchain wallet.

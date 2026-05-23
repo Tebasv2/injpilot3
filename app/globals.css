@@ -7,28 +7,42 @@
   --foreground: #e0e8ff;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: 'Inter', system-ui, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-@layer utilities {
-  .glass {
-    background: rgba(15, 26, 61, 0.6);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(79, 110, 247, 0.2);
-  }
+/* Glass card effect */
+.glass {
+  background: rgba(15, 26, 61, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(79, 110, 247, 0.25);
+  border-radius: 12px;
+}
 
-  .glow {
-    box-shadow: 0 0 20px rgba(79, 110, 247, 0.3);
-  }
+/* Glow effect on buttons */
+.glow {
+  box-shadow: 0 0 20px rgba(79, 110, 247, 0.35);
+}
 
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
+/* Hide scrollbar but keep functionality */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
 }

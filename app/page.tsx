@@ -10,14 +10,15 @@ export default function Home() {
       <Header />
 
       <main className="flex-1 p-4 md:p-6">
-        <div className="max-w-[1600px] mx-auto h-full grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-4 md:gap-6">
+        <div className="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-4 md:gap-6"
+             style={{ height: 'calc(100vh - 100px)' }}>
           {/* Left Panel — Live Data */}
-          <div className="lg:h-[calc(100vh-120px)]">
+          <div className="min-h-[400px] lg:min-h-0">
             <LiveDataPanel />
           </div>
 
           {/* Right Panel — AI Chat */}
-          <div className="lg:h-[calc(100vh-120px)]">
+          <div className="min-h-[500px] lg:min-h-0">
             <AIChatPanel />
           </div>
         </div>

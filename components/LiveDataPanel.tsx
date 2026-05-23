@@ -6,7 +6,9 @@ import { TrendingUp, TrendingDown, Coins, Shield, PieChart, Loader2, AlertCircle
 
 export default function LiveDataPanel() {
   const { wallet } = useWallet();
-  const { price, balances, staking, loading, error } = useInjectiveData(wallet.address);
+console.log("Wallet address:", wallet.address, "Connected:", wallet.isConnected);
+const { price, balances, staking, loading, error } = useInjectiveData(wallet.address);
+
 
   const injBalance = balances.find((b) => b.denom === 'inj');
   const balanceNum = injBalance ? parseFloat(injBalance.amount) / 1e18 : 0;
