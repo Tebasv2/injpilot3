@@ -1,5 +1,5 @@
 'use client';
-
+import { useInjectiveData } from '@/hooks/useInjectiveData';
 import { useState, useRef, useEffect } from 'react';
 import { useWallet } from '@/hooks/useWallet';
 import { useChatHistory } from '@/hooks/useChatHistory';
@@ -109,8 +109,12 @@ export default function AIChatPanel() {
 
     try {
       // Get balance and portfolio data from wallet context
-      const balance = wallet?.balance || '0';
-      const portfolioValue = wallet?.portfolioValue || '0';
+      const { price, balances, staking } = useInjectiveData(wallet?.address || '');
+const injBalance = balances.find(b => b.denom === 'inj');
+const balance = injBalance ? (parseFloat(injBalance.amount) / 1e18).toFixed(4) : '0';
+const portfolioValue = price.price > 0 && parseFloat(balance) > 0
+  ? (parseFloat(balance) * price.price).toFixed(2)
+  : '0';
       const stakingApy = '14.5';
 
       const reply = await askGroq(
