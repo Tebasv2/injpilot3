@@ -8,7 +8,7 @@ export default function Header() {
       <div className="flex items-center gap-3">
         <img
         src="../injlogo.png"
-        alt="injlogo"
+        alt="injogo"
         className='w-8 h-8 object-contain'
         />
 
