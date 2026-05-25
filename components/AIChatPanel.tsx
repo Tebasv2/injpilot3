@@ -132,7 +132,7 @@ export default function AIChatPanel() {
   };
 
   const suggestions = [
-    "Roast my portfolio 🔥",
+    "Roast my portfolio ",
     "Give me a portfolio overview",
     "Where should I stake for best APY?",
     "What's popping on Injective rn?",
@@ -167,7 +167,7 @@ export default function AIChatPanel() {
       <div className="flex-1 overflow-y-auto p-5 space-y-4">
         {messages.length === 0 && !thinking && (
           <div className="text-center py-8">
-            <div className="text-4xl mb-3">🤖</div>
+            <div className="text-4xl mb-3"></div>
             <p className="text-sm text-injective-100 opacity-60 mb-2 font-medium">
               gm ser, InjPilot online ⚡
             </p>
