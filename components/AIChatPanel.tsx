@@ -1,3 +1,4 @@
+cat > /workspaces/injpilot3/components/AIChatPanel.tsx << 'ENDOFFILE'
 'use client';
 import { useInjectiveData } from '@/hooks/useInjectiveData';
 import { useState, useRef, useEffect } from 'react';
@@ -20,12 +21,11 @@ Your personality:
 - You use crypto slang naturally (ngmi, wagmi, wen moon, gm, based, ser, fren, probably nothing) when it fits
 - You give high-level portfolio overviews with honest takes
 - You're bullish on Injective but not blindly — you give real insights
-- Give future injective price based on setiments
-- 
+- Give future injective price based on sentiments
 
 What you help with:
 - Portfolio analysis and roasts
-- Staking strategies and APY breakdowns  
+- Staking strategies and APY breakdowns
 - DeFi opportunities on Injective (Helix, Mito, Neptune)
 - Market insights and token analysis
 - Ecosystem navigation (swapping, bridging, staking)
@@ -154,7 +154,6 @@ export default function AIChatPanel() {
 
   return (
     <div className="glass rounded-xl h-full flex flex-col">
-      {/* Header */}
       <div className="px-5 py-4 border-b border-injective-900/50 flex items-center gap-3">
         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-injective-500 to-purple-600 flex items-center justify-center">
           <Bot size={16} className="text-white" />
@@ -165,7 +164,6 @@ export default function AIChatPanel() {
         </div>
       </div>
 
-      {/* Messages */}
       <div className="flex-1 overflow-y-auto p-5 space-y-4">
         {messages.length === 0 && !thinking && (
           <div className="text-center py-8">
@@ -221,18 +219,9 @@ export default function AIChatPanel() {
             </div>
             <div className="bg-injective-900/40 px-4 py-3 rounded-xl rounded-tl-none">
               <div className="flex gap-1 items-center">
-                <span
-                  className="w-2 h-2 rounded-full bg-injective-500 animate-bounce"
-                  style={{ animationDelay: '0ms' }}
-                />
-                <span
-                  className="w-2 h-2 rounded-full bg-injective-500 animate-bounce"
-                  style={{ animationDelay: '150ms' }}
-                />
-                <span
-                  className="w-2 h-2 rounded-full bg-injective-500 animate-bounce"
-                  style={{ animationDelay: '300ms' }}
-                />
+                <span className="w-2 h-2 rounded-full bg-injective-500 animate-bounce" style={{ animationDelay: '0ms' }} />
+                <span className="w-2 h-2 rounded-full bg-injective-500 animate-bounce" style={{ animationDelay: '150ms' }} />
+                <span className="w-2 h-2 rounded-full bg-injective-500 animate-bounce" style={{ animationDelay: '300ms' }} />
               </div>
             </div>
           </div>
@@ -240,7 +229,6 @@ export default function AIChatPanel() {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input */}
       <div className="px-5 py-4 border-t border-injective-900/50">
         <div className="flex gap-3">
           <textarea
@@ -257,11 +245,7 @@ export default function AIChatPanel() {
             disabled={!input.trim() || thinking}
             className="bg-injective-500 hover:bg-injective-600 disabled:opacity-40 disabled:cursor-not-allowed p-3 rounded-xl transition-colors"
           >
-            {thinking ? (
-              <Loader2 size={18} className="animate-spin" />
-            ) : (
-              <Send size={18} />
-            )}
+            {thinking ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
           </button>
         </div>
         <p className="text-xs text-injective-100 opacity-30 mt-2 text-center">
@@ -271,3 +255,4 @@ export default function AIChatPanel() {
     </div>
   );
 }
+ENDOFFILE
