@@ -1,4 +1,4 @@
-cat > /workspaces/injpilot3/components/AIChatPanel.tsx << 'ENDOFFILE'
+
 'use client';
 import { useInjectiveData } from '@/hooks/useInjectiveData';
 import { useState, useRef, useEffect } from 'react';
@@ -255,4 +255,4 @@ export default function AIChatPanel() {
     </div>
   );
 }
-ENDOFFILE
+
