@@ -88,10 +88,10 @@ async function askGroq(
 export default function AIChatPanel() {
   const { wallet } = useWallet();
   const { messages, addMessage } = useChatHistory(wallet?.address);
+  const { price, balances, staking } = useInjectiveData(wallet?.address || '');
 
   const [input, setInput] = useState('');
   const [thinking, setThinking] = useState(false);
-
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -108,30 +108,17 @@ export default function AIChatPanel() {
     await addMessage({ role: 'user', content: userMsg, timestamp: Date.now() });
 
     try {
-      // Get balance and portfolio data from wallet context
-      const { price, balances, staking } = useInjectiveData(wallet?.address || '');
-const injBalance = balances.find(b => b.denom === 'inj');
-const balance = injBalance ? (parseFloat(injBalance.amount) / 1e18).toFixed(4) : '0';
-const portfolioValue = price.price > 0 && parseFloat(balance) > 0
-  ? (parseFloat(balance) * price.price).toFixed(2)
-  : '0';
-      const stakingApy = '14.5';
+      const injBalance = balances.find(b => b.denom === 'inj');
+      const balance = injBalance ? (parseFloat(injBalance.amount) / 1e18).toFixed(4) : '0';
+      const portfolioValue = price.price > 0 && parseFloat(balance) > 0
+        ? (parseFloat(balance) * price.price).toFixed(2)
+        : '0';
+      const stakingApy = staking?.apy?.toFixed(1) || '14.5';
 
-      const reply = await askGroq(
-        userMsg,
-        wallet.address,
-        balance,
-        portfolioValue,
-        stakingApy
-      );
-
+      const reply = await askGroq(userMsg, wallet.address, balance, portfolioValue, stakingApy);
       await addMessage({ role: 'assistant', content: reply, timestamp: Date.now() });
     } catch (err: any) {
-      await addMessage({
-        role: 'assistant',
-        content: `Error: ${err.message}`,
-        timestamp: Date.now(),
-      });
+      await addMessage({ role: 'assistant', content: `Error: ${err.message}`, timestamp: Date.now() });
     } finally {
       setThinking(false);
     }
