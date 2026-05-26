@@ -7,7 +7,10 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'Injective AI Wallet',
   description: 'AI-powered dashboard for your Injective wallet',
+  
 };
+
+
 
 export default function RootLayout({
   children,
