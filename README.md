@@ -10,6 +10,8 @@ AI-powered dashboard for your Injective wallet. Ask questions about your portfol
 - **Personality** — Get response based on tone set during interaction
 - **AI Chat** — Ask anything: "What's my staking reward?", "Send 2 INJ to inj1...", "Best pool to provide liquidity?"
 - **Chat History** — Firebase Firestore persists your conversation per wallet address
+- **Track porfoltio** - Telegram bot that tracks injective based wallet easily
+- **Get ecosystem link** - Telegram bot that sends ecosystem links(e.g, Talis, Helix, Choice, Merlinmarkets)
 
 ## Tech Stack
 
